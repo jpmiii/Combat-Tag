@@ -2,6 +2,7 @@ package com.trc202.CombatTagListeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -48,7 +49,8 @@ public class NoPvpPlayerListener implements Listener {
                 EntityPlayer ePlayer = cPlayer.getHandle();
                 ePlayer.invulnerableTicks = 0;
                 plugin.despawnNPC(loginDataContainer);
-                if (loginPlayer.getHealth() > 0) {
+                Damageable ss = (Damageable)loginPlayer;
+                if (ss.getHealth() > 0) {
                     loginDataContainer.setPvPTimeout(plugin.getTagDuration());
                 }
             }
@@ -61,30 +63,36 @@ public class NoPvpPlayerListener implements Listener {
         Player quitPlr = e.getPlayer();
         if (quitPlr.isDead()) {
             plugin.entityListener.onPlayerDeath(quitPlr);
-        } else if (plugin.hasDataContainer(quitPlr.getName())) {
+        } else {
+        	PlayerDataContainer quitDataContainer = null;
+        	if (!plugin.hasDataContainer(quitPlr.getName())) {
+        		quitDataContainer = plugin.createPlayerData(quitPlr.getName());
+        		quitDataContainer.setPvPTimeout(86400);
+            } else {
+            	quitDataContainer = plugin.getPlayerData(quitPlr.getName());
+            }
             //Player is likely in pvp
-            PlayerDataContainer quitDataContainer = plugin.getPlayerData(quitPlr.getName());
+
             if (!quitDataContainer.hasPVPtagExpired()) {
                 //Player has logged out before the pvp battle is considered over by the plugin
                 if (plugin.isDebugEnabled()) {
                     plugin.log.info("[CombatTag] " + quitPlr.getName() + " has logged of during pvp!");
                 }
-                if (plugin.settings.isInstaKill() || quitPlr.getHealth() <= 0) {
+                Damageable ss = (Damageable)quitPlr;
+                if (plugin.settings.isInstaKill() || ss.getHealth() <= 0) {
                     plugin.log.info("[CombatTag] " + quitPlr.getName() + " has been instakilled!");
                     quitPlr.damage(1000L);
                     plugin.removeDataContainer(quitPlr.getName());
                 } else {
                     boolean willSpawn = true;
-                    if (plugin.settings.dontSpawnInWG()) {
-                        willSpawn = plugin.ctIncompatible.InWGCheck(quitPlr);
-                    }
+
                     if (willSpawn) {
                         NPC npc = plugin.spawnNpc(quitPlr, quitPlr.getLocation());
                         if (npc.getBukkitEntity() instanceof Player) {
                             Player npcPlayer = (Player) npc.getBukkitEntity();
                             plugin.copyContentsNpc(npc, quitPlr);
                             npcPlayer.setMetadata("NPC", new FixedMetadataValue(plugin, "NPC"));
-                            double healthSet = plugin.healthCheck(quitPlr.getHealth());
+                            double healthSet = plugin.healthCheck(ss.getHealth());
                             npcPlayer.setHealth(healthSet);
                             quitDataContainer.setSpawnedNPC(true);
                             quitDataContainer.setNPCId(quitPlr.getName());
@@ -98,6 +106,7 @@ public class NoPvpPlayerListener implements Listener {
                 }
             }
         }
+    
     }
 
     @EventHandler(ignoreCancelled = true)

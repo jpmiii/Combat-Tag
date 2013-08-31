@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -51,7 +52,7 @@ public class CombatTag extends JavaPlugin {
 
     private static String mainDirectory = "plugins/CombatTag";
 
-    public final CombatTagIncompatibles ctIncompatible = new CombatTagIncompatibles(this);
+
 
     private final NoPvpPlayerListener plrListener = new NoPvpPlayerListener(this);
 
@@ -402,7 +403,9 @@ public class CombatTag extends JavaPlugin {
         if (target != null && (npcm.getNPC(playerName) == npc) && npc != null) {
             EntityHuman humanTarget = ((CraftHumanEntity) target).getHandle();
             Player source = (Player) npc.getBukkitEntity();
-            if (source.getHealth() <= 0) {
+            Damageable ss = (Damageable)source;
+
+            if (ss.getHealth() <= 0) {
                 emptyInventory(target);
                 ItemStack airItem = new ItemStack(Material.AIR);
                 ItemStack[] emptyArmorStack = new ItemStack[4];
@@ -437,7 +440,8 @@ public class CombatTag extends JavaPlugin {
         target.setFireTicks(source.getFireTicks());
         if (target instanceof CraftHumanEntity) {
             EntityHuman humanTarget = ((CraftHumanEntity) target).getHandle();
-            double healthSet = healthCheck(source.getHealth());
+            Damageable ss = (Damageable)source;
+            double healthSet = healthCheck(ss.getHealth());
             humanTarget.setHealth((float) healthSet);
         } else {
             log.info("[CombatTag] An error has occurred! Target is not a HumanEntity!");

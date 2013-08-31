@@ -81,38 +81,6 @@ public class NoPvpEntityListener implements Listener{
 		PlayerDataContainer damagerData;
 		PlayerDataContainer damagedData;
 		
-		if(plugin.ctIncompatible.notInArena(damaged,damager)){
-			if(!damager.hasPermission("combattag.ignore") && (damager.getGameMode() != GameMode.CREATIVE)){	
-				//Get damager player data container
-				if(plugin.hasDataContainer(damager.getName())){
-					damagerData = plugin.getPlayerData(damager.getName());
-				}else{
-					damagerData = plugin.createPlayerData(damager.getName());
-				}
-				if(plugin.settings.isSendMessageWhenTagged() && !plugin.npcm.isNPC(damaged) && damagerData.hasPVPtagExpired()){
-					String tagMessage = plugin.settings.getTagMessageDamager();
-					tagMessage = tagMessage.replace("[player]", "" + damaged.getName());
-					damager.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
-				}
-				damagerData.setPvPTimeout(plugin.getTagDuration());
-			}
-			if(!damaged.hasPermission("combattag.ignore") && !plugin.settings.onlyDamagerTagged()){	
-				//Get damaged player data container
-				if(plugin.hasDataContainer(damaged.getName())){
-					damagedData = plugin.getPlayerData(damaged.getName());
-				}else{
-					damagedData = plugin.createPlayerData(damaged.getName());
-				}
-				if(plugin.settings.isSendMessageWhenTagged() && !plugin.npcm.isNPC(damaged) && damagedData.hasPVPtagExpired()){
-					String tagMessage = plugin.settings.getTagMessageDamaged();
-					tagMessage = tagMessage.replace("[player]", damager.getName());
-					damaged.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
-				}
-				if(plugin.isDebugEnabled() && !plugin.npcm.isNPC(damaged) && damagedData.hasPVPtagExpired()){
-					plugin.log.info("[CombatTag] " + damager.getName() + " tagged " + damaged.getName() + ", setting pvp timeout");
-				}
-				damagedData.setPvPTimeout(plugin.getTagDuration());
-			}
-		}
+
 	}
 }

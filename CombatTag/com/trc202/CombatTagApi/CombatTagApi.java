@@ -120,4 +120,14 @@ public class CombatTagApi {
 		}
 		playerData.setPvPTimeout(plugin.getTagDuration());
 	}
+	public void untagPlayer(String playerName){
+		PlayerDataContainer playerData;
+		if(plugin.hasDataContainer(playerName)){
+			playerData = plugin.getPlayerData(playerName);
+			
+		} else {
+			playerData = plugin.createPlayerData(playerName);
+		}
+		playerData.setPvPTimeout(0);
+	}
 }
