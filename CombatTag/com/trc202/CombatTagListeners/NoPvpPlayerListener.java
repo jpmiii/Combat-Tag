@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -55,9 +56,25 @@ public class NoPvpPlayerListener implements Listener {
                 }
             }
             loginDataContainer.setSpawnedNPC(false);
+        } else {
+        	PlayerDataContainer loginDataContainer = plugin.createPlayerData(loginPlayer.getName());
+        	loginDataContainer.setPvPTimeout(86400);
         }
     }
-
+    
+    
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void tagOnSpawn(PlayerRespawnEvent event) {
+        Player spawnPlayer = event.getPlayer();
+        if (!plugin.hasDataContainer(spawnPlayer.getName())) {
+        	PlayerDataContainer loginDataContainer = plugin.createPlayerData(spawnPlayer.getName());
+        	loginDataContainer.setPvPTimeout(86400);
+        }
+    }
+    
+    
+    
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player quitPlr = e.getPlayer();
