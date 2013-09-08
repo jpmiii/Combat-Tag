@@ -9,52 +9,72 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import com.trc202.CombatTag.CombatTag;
 
+public class CombatTagCommandPrevention implements Listener {
 
-public class CombatTagCommandPrevention implements Listener{
-	
 	CombatTag plugin;
-	
-	public CombatTagCommandPrevention(CombatTag plugin){
+
+	public CombatTagCommandPrevention(CombatTag plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	@EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event)
-    {
+	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 		Player player = event.getPlayer();
-		if(plugin.hasDataContainer(player.getName()) && !plugin.getPlayerData(player.getName()).hasPVPtagExpired()){
+		if (plugin.hasDataContainer(player.getName())
+				&& !plugin.getPlayerData(player.getName()).hasPVPtagExpired()) {
 			String command = event.getMessage();
 			plugin.log.info(command);
-			for(String disabledCommand : plugin.settings.getDisabledCommands()){
-				if (disabledCommand.equalsIgnoreCase("all") && !command.equalsIgnoreCase("/ct") && !command.equalsIgnoreCase("/combattag")){
-					player.sendMessage(ChatColor.RED + "[CombatTag] All commands are disabled while in combat");
+			for (String disabledCommand : plugin.settings.getDisabledCommands()) {
+				if (disabledCommand.equalsIgnoreCase("all")
+						&& !command.equalsIgnoreCase("/ct")
+						&& !command.equalsIgnoreCase("/combattag")) {
+					player.sendMessage(ChatColor.RED
+							+ "[CombatTag] All commands are disabled while in combat");
 					event.setCancelled(true);
 					return;
 				}
-				if(command.indexOf(" ") == disabledCommand.length()){
-					if(command.substring(0, command.indexOf(" ")).equalsIgnoreCase(disabledCommand)){
-						if(plugin.isDebugEnabled()){plugin.log.info("[CombatTag] Combat Tag has blocked the command: " + disabledCommand + " .");}
-						player.sendMessage(ChatColor.RED + "[CombatTag] This command is disabled while in combat");
+				if (command.indexOf(" ") == disabledCommand.length()) {
+					if (command.substring(0, command.indexOf(" "))
+							.equalsIgnoreCase(disabledCommand)) {
+						if (plugin.isDebugEnabled()) {
+							plugin.log
+									.info("[CombatTag] Combat Tag has blocked the command: "
+											+ disabledCommand + " .");
+						}
+						player.sendMessage(ChatColor.RED
+								+ "[CombatTag] This command is disabled while in combat");
 						event.setCancelled(true);
 						return;
 					}
-				} else if(disabledCommand.indexOf(" ") > 0){
-					if(command.toLowerCase().startsWith(disabledCommand.toLowerCase())){
-						if(plugin.isDebugEnabled()){plugin.log.info("[CombatTag] Combat Tag has blocked the command: " + disabledCommand + " .");}
-						player.sendMessage(ChatColor.RED + "[CombatTag] This command is disabled while in combat");
+				} else if (disabledCommand.indexOf(" ") > 0) {
+					if (command.toLowerCase().startsWith(
+							disabledCommand.toLowerCase())) {
+						if (plugin.isDebugEnabled()) {
+							plugin.log
+									.info("[CombatTag] Combat Tag has blocked the command: "
+											+ disabledCommand + " .");
+						}
+						player.sendMessage(ChatColor.RED
+								+ "[CombatTag] This command is disabled while in combat");
 						event.setCancelled(true);
 						return;
 					}
-				} else if(command.indexOf(" ") == -1 && command.equalsIgnoreCase(disabledCommand)){
-					if(plugin.isDebugEnabled()){plugin.log.info("[CombatTag] Combat Tag has blocked the command: " + disabledCommand + " .");}
-					player.sendMessage(ChatColor.RED + "[CombatTag] This command is disabled while in combat");
+				} else if (command.indexOf(" ") == -1
+						&& command.equalsIgnoreCase(disabledCommand)) {
+					if (plugin.isDebugEnabled()) {
+						plugin.log
+								.info("[CombatTag] Combat Tag has blocked the command: "
+										+ disabledCommand + " .");
+					}
+					player.sendMessage(ChatColor.RED
+							+ "[CombatTag] This command is disabled while in combat");
 					event.setCancelled(true);
 					return;
 				}
 			}
-		}else if(plugin.hasDataContainer(player.getName()) && plugin.getPlayerData(player.getName()).hasPVPtagExpired()){
+		} else if (plugin.hasDataContainer(player.getName())
+				&& plugin.getPlayerData(player.getName()).hasPVPtagExpired()) {
 			plugin.removeDataContainer(player.getName());
 		}
 	}
 }
-

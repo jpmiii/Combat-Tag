@@ -2,8 +2,7 @@ package com.trc202.Containers;
 
 import org.bukkit.inventory.ItemStack;
 
-
-public class PlayerDataContainer{
+public class PlayerDataContainer {
 	/**
 	 * 
 	 */
@@ -16,14 +15,14 @@ public class PlayerDataContainer{
 	private boolean hasSpawnedNPC;
 	private String npcId;
 	private String playerName;
-	private long pvpTimeOut; //Time at which the current tag is over
+	private long pvpTimeOut; // Time at which the current tag is over
 	private boolean shouldBePunished;
 	private int health;
 	private float experience;
 	private ItemStack[] playerInventory;
 	private ItemStack[] playerArmor;
-	
-	public PlayerDataContainer(String playerName){
+
+	public PlayerDataContainer(String playerName) {
 		setSpawnedNPC(false);
 		this.playerName = playerName;
 		this.setNPCId("");
@@ -31,26 +30,27 @@ public class PlayerDataContainer{
 		setHealth(0);
 		pvpTimeOut = 0L;
 	}
-	
-	public void setNPCId(String npcId){
+
+	public void setNPCId(String npcId) {
 		this.npcId = npcId;
 	}
-	public String getNPCId(){
+
+	public String getNPCId() {
 		return npcId;
 	}
-	
-	public void setPvPTimeout(int seconds){
+
+	public void setPvPTimeout(int seconds) {
 		pvpTimeOut = System.currentTimeMillis() + (seconds * 1000);
 	}
-	public boolean hasPVPtagExpired(){
+
+	public boolean hasPVPtagExpired() {
 		return (pvpTimeOut <= System.currentTimeMillis());
 	}
-	
-	public String getPlayerName(){
+
+	public String getPlayerName() {
 		return playerName;
 	}
 
-	
 	public void setShouldBePunished(boolean shouldBePunished) {
 		this.shouldBePunished = shouldBePunished;
 	}
@@ -59,30 +59,32 @@ public class PlayerDataContainer{
 		return shouldBePunished;
 	}
 
-
-
-	public void setPlayerInventory(ItemStack[] playerInventory){
+	public void setPlayerInventory(ItemStack[] playerInventory) {
 		this.playerInventory = playerInventory;
 	}
-	public ItemStack[] getPlayerInventory(){
+
+	public ItemStack[] getPlayerInventory() {
 		return playerInventory;
 	}
-	public void setPlayerArmor(ItemStack[] armor){
+
+	public void setPlayerArmor(ItemStack[] armor) {
 		this.playerArmor = armor;
 	}
-	public ItemStack[] getPlayerArmor(){
+
+	public ItemStack[] getPlayerArmor() {
 		return playerArmor;
 	}
 
 	public void setHealth(int health) {
-		this.health = health;	
+		this.health = health;
 	}
-	public int getHealth(){
+
+	public int getHealth() {
 		return health;
 	}
 
 	public void setExp(float exp) {
-		this.experience = exp;	
+		this.experience = exp;
 	}
 
 	public float getExp() {
@@ -96,8 +98,8 @@ public class PlayerDataContainer{
 	public void setSpawnedNPC(boolean b) {
 		hasSpawnedNPC = b;
 	}
-	
-	public long getRemainingTagTime(){
+
+	public long getRemainingTagTime() {
 		long endOfTag = (pvpTimeOut - System.currentTimeMillis());
 		return endOfTag;
 	}

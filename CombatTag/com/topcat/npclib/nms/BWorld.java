@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.v1_6_R2.*;
 
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
@@ -16,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- *
+ * 
  * @author martin
  */
 public class BWorld {
@@ -67,38 +66,45 @@ public class BWorld {
 	}
 
 	public boolean createExplosion(double x, double y, double z, float power) {
-		return wServer.explode(null, x, y, z, power, false).wasCanceled ? false : true;
+		return wServer.explode(null, x, y, z, power, false).wasCanceled ? false
+				: true;
 	}
 
 	public boolean createExplosion(Location l, float power) {
-		return wServer.explode(null, l.getX(), l.getY(), l.getZ(), power, false).wasCanceled ? false : true;
+		return wServer
+				.explode(null, l.getX(), l.getY(), l.getZ(), power, false).wasCanceled ? false
+				: true;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void removeEntity(String name, final Player player, JavaPlugin plugin) {
-		server.getServer().getScheduler().callSyncMethod(plugin, new Callable<Object>() {
+		server.getServer().getScheduler()
+				.callSyncMethod(plugin, new Callable<Object>() {
 
-			@Override
-			public Object call() throws Exception {
-				Location loc = player.getLocation();
-				CraftWorld craftWorld = (CraftWorld) player.getWorld();
-				CraftPlayer craftPlayer = (CraftPlayer) player;
+					@Override
+					public Object call() throws Exception {
+						Location loc = player.getLocation();
+						CraftWorld craftWorld = (CraftWorld) player.getWorld();
+						CraftPlayer craftPlayer = (CraftPlayer) player;
 
-				double x = loc.getX() + 0.5;
-				double y = loc.getY() + 0.5;
-				double z = loc.getZ() + 0.5;
-				double radius = 10;
+						double x = loc.getX() + 0.5;
+						double y = loc.getY() + 0.5;
+						double z = loc.getZ() + 0.5;
+						double radius = 10;
 
-				List<Entity> entities = new ArrayList<Entity>();
-				AxisAlignedBB bb = AxisAlignedBB.a(x - radius, y - radius, z - radius, x + radius, y + radius, z + radius);
-				entities = craftWorld.getHandle().getEntities(craftPlayer.getHandle(), bb);
-				for (Entity o : entities) {
-					if (!(o instanceof EntityPlayer)) {
-						o.getBukkitEntity().remove();
+						List<Entity> entities = new ArrayList<Entity>();
+						AxisAlignedBB bb = AxisAlignedBB.a(x - radius, y
+								- radius, z - radius, x + radius, y + radius, z
+								+ radius);
+						entities = craftWorld.getHandle().getEntities(
+								craftPlayer.getHandle(), bb);
+						for (Entity o : entities) {
+							if (!(o instanceof EntityPlayer)) {
+								o.getBukkitEntity().remove();
+							}
+						}
+						return null;
 					}
-				}
-				return null;
-			}
-		});
+				});
 	}
 }

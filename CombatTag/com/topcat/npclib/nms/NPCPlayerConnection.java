@@ -7,18 +7,23 @@ import org.bukkit.craftbukkit.v1_6_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 
 /**
- *
+ * 
  * @author martin
  */
 public class NPCPlayerConnection extends PlayerConnection {
 
 	public NPCPlayerConnection(NPCManager npcManager, EntityPlayer entityplayer) {
-		super(npcManager.getServer().getMCServer(), npcManager.getNPCNetworkManager(), entityplayer);
+		super(npcManager.getServer().getMCServer(), npcManager
+				.getNPCNetworkManager(), entityplayer);
 	}
 
 	@Override
 	public CraftPlayer getPlayer() {
-		return new CraftPlayer((CraftServer) Bukkit.getServer(), player); //Fake player prevents spout NPEs
+		return new CraftPlayer((CraftServer) Bukkit.getServer(), player); // Fake
+																			// player
+																			// prevents
+																			// spout
+																			// NPEs
 	}
 
 	;
@@ -132,7 +137,6 @@ public class NPCPlayerConnection extends PlayerConnection {
 
 	@Override
 	public void a(Packet130UpdateSign packet130updatesign) {
-	}
-;
+	};
 
 }

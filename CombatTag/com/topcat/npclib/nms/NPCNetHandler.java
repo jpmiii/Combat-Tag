@@ -31,12 +31,17 @@ import com.topcat.npclib.NPCManager;
 public class NPCNetHandler extends PlayerConnection {
 
 	public NPCNetHandler(NPCManager npcManager, EntityPlayer entityplayer) {
-		super(npcManager.getServer().getMCServer(), npcManager.getNPCNetworkManager(), entityplayer);
+		super(npcManager.getServer().getMCServer(), npcManager
+				.getNPCNetworkManager(), entityplayer);
 	}
 
 	@Override
 	public CraftPlayer getPlayer() {
-		return new CraftPlayer((CraftServer) Bukkit.getServer(), player); //Fake player prevents spout NPEs
+		return new CraftPlayer((CraftServer) Bukkit.getServer(), player); // Fake
+																			// player
+																			// prevents
+																			// spout
+																			// NPEs
 	}
 
 	public void d() {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.server.v1_6_R2.AxisAlignedBB;
 
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
@@ -16,8 +15,9 @@ public class Node { // Holds data about each block we check
 	static {
 		liquids.add(Material.WATER);
 		liquids.add(Material.STATIONARY_WATER);
-		//liquids.add(Material.LAVA); Maybe swimming in lava isn't the best idea for npcs
-		//liquids.add(Material.STATIONARY_LAVA);
+		// liquids.add(Material.LAVA); Maybe swimming in lava isn't the best
+		// idea for npcs
+		// liquids.add(Material.STATIONARY_LAVA);
 		liquids.add(Material.LADDER); // Trust me it makes sense
 	}
 	int f, g = 0, h;
@@ -37,7 +37,9 @@ public class Node { // Holds data about each block we check
 	public void update() {
 		notsolid = true;
 		if (b.getType() != Material.AIR) {
-			AxisAlignedBB box = net.minecraft.server.v1_6_R2.Block.byId[b.getTypeId()].b(((CraftWorld) b.getWorld()).getHandle(), b.getX(), b.getY(), b.getZ());
+			AxisAlignedBB box = net.minecraft.server.v1_6_R2.Block.byId[b
+					.getTypeId()].b(((CraftWorld) b.getWorld()).getHandle(),
+					b.getX(), b.getY(), b.getZ());
 			if (box != null) {
 				if (Math.abs(box.e - box.b) > 0.2) {
 					notsolid = false;

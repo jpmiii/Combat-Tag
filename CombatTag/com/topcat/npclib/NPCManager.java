@@ -31,7 +31,7 @@ import net.minecraft.server.v1_6_R2.WorldServer;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftEntity;
 
 /**
- *
+ * 
  * @author martin
  */
 public class NPCManager {
@@ -53,23 +53,24 @@ public class NPCManager {
 		}
 
 		NPCManager.plugin = plugin;
-		taskid = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		taskid = Bukkit.getServer().getScheduler()
+				.scheduleSyncRepeatingTask(plugin, new Runnable() {
 
-			@Override
-			public void run() {
-				HashSet<String> toRemove = new HashSet<String>();
-				for (String i : npcs.keySet()) {
-					Entity j = npcs.get(i).getEntity();
-					j.x();
-					if (j.dead) {
-						toRemove.add(i);
+					@Override
+					public void run() {
+						HashSet<String> toRemove = new HashSet<String>();
+						for (String i : npcs.keySet()) {
+							Entity j = npcs.get(i).getEntity();
+							j.x();
+							if (j.dead) {
+								toRemove.add(i);
+							}
+						}
+						for (String n : toRemove) {
+							npcs.remove(n);
+						}
 					}
-				}
-				for (String n : toRemove) {
-					npcs.remove(n);
-				}
-			}
-		}, 1L, 1L);
+				}, 1L, 1L);
 		Bukkit.getServer().getPluginManager().registerEvents(new SL(), plugin);
 		Bukkit.getServer().getPluginManager().registerEvents(new WL(), plugin);
 	}
@@ -84,12 +85,12 @@ public class NPCManager {
 		return bworld;
 	}
 
-	private class SL implements Listener { 
-		@SuppressWarnings("unused") 
-		public void disableNPCLib() { 
+	private class SL implements Listener {
+		@SuppressWarnings("unused")
+		public void disableNPCLib() {
 			despawnAll();
-			Bukkit.getServer().getScheduler().cancelTask(taskid); 
-		} 
+			Bukkit.getServer().getScheduler().cancelTask(taskid);
+		}
 	}
 
 	private class WL implements Listener {
@@ -98,9 +99,14 @@ public class NPCManager {
 		@EventHandler
 		public void onChunkLoad(ChunkLoadEvent event) {
 			for (NPC npc : npcs.values()) {
-				if (npc != null && event.getChunk() == npc.getBukkitEntity().getLocation().getBlock().getChunk()) {
+				if (npc != null
+						&& event.getChunk() == npc.getBukkitEntity()
+								.getLocation().getBlock().getChunk()) {
 					BWorld world = getBWorld(event.getWorld());
-					if(world.getWorldServer().getEntity(npc.getEntity().id) != npc.getEntity()){ //ATTEMPT TO ERRADICATE ENTITY TRACKING ERROR (WORKS IN NORMAL BUKKIT)
+					if (world.getWorldServer().getEntity(npc.getEntity().id) != npc
+							.getEntity()) { // ATTEMPT TO ERRADICATE ENTITY
+											// TRACKING ERROR (WORKS IN NORMAL
+											// BUKKIT)
 						world.getWorldServer().addEntity(npc.getEntity());
 					}
 				}
@@ -120,19 +126,25 @@ public class NPCManager {
 
 	public NPC spawnHumanNPC(String name, Location l, String id) {
 		if (npcs.containsKey(id)) {
-			server.getLogger().log(Level.WARNING, "NPC with that id already exists, existing NPC returned");
+			server.getLogger().log(Level.WARNING,
+					"NPC with that id already exists, existing NPC returned");
 			return npcs.get(id);
 		} else {
-			if (name.length() > 16) { // Check and nag if name is too long, spawn NPC anyway with shortened name.
+			if (name.length() > 16) { // Check and nag if name is too long,
+										// spawn NPC anyway with shortened name.
 				String tmp = name.substring(0, 16);
-				server.getLogger().log(Level.WARNING, "NPCs can't have names longer than 16 characters,");
-				server.getLogger().log(Level.WARNING, name + " has been shortened to " + tmp);
+				server.getLogger().log(Level.WARNING,
+						"NPCs can't have names longer than 16 characters,");
+				server.getLogger().log(Level.WARNING,
+						name + " has been shortened to " + tmp);
 				name = tmp;
 			}
 			BWorld world = getBWorld(l.getWorld());
-			NPCEntity npcEntity = new NPCEntity(this, world, name, new PlayerInteractManager(world.getWorldServer()));
-			npcEntity.setPositionRotation(l.getX(), l.getY(), l.getZ(), l.getYaw(), l.getPitch());
-			world.getWorldServer().addEntity(npcEntity); //the right way
+			NPCEntity npcEntity = new NPCEntity(this, world, name,
+					new PlayerInteractManager(world.getWorldServer()));
+			npcEntity.setPositionRotation(l.getX(), l.getY(), l.getZ(),
+					l.getYaw(), l.getPitch());
+			world.getWorldServer().addEntity(npcEntity); // the right way
 			NPC npc = new HumanNPC(npcEntity);
 			npcs.put(id, npc);
 			return npc;
@@ -149,7 +161,7 @@ public class NPCManager {
 
 	public void despawnHumanByName(String npcName) {
 		if (npcName.length() > 16) {
-			npcName = npcName.substring(0, 16); //Ensure you can still despawn
+			npcName = npcName.substring(0, 16); // Ensure you can still despawn
 		}
 		HashSet<String> toRemove = new HashSet<String>();
 		for (String n : npcs.keySet()) {
@@ -203,7 +215,8 @@ public class NPCManager {
 	public String getNPCIdFromEntity(org.bukkit.entity.Entity e) {
 		if (e instanceof HumanEntity) {
 			for (String i : npcs.keySet()) {
-				if (npcs.get(i).getBukkitEntity().getEntityId() == ((HumanEntity) e).getEntityId()) {
+				if (npcs.get(i).getBukkitEntity().getEntityId() == ((HumanEntity) e)
+						.getEntityId()) {
 					return i;
 				}
 			}
@@ -212,10 +225,13 @@ public class NPCManager {
 	}
 
 	public void rename(String id, String name) {
-		if (name.length() > 16) { // Check and nag if name is too long, spawn NPC anyway with shortened name.
+		if (name.length() > 16) { // Check and nag if name is too long, spawn
+									// NPC anyway with shortened name.
 			String tmp = name.substring(0, 16);
-			server.getLogger().log(Level.WARNING, "NPCs can't have names longer than 16 characters,");
-			server.getLogger().log(Level.WARNING, name + " has been shortened to " + tmp);
+			server.getLogger().log(Level.WARNING,
+					"NPCs can't have names longer than 16 characters,");
+			server.getLogger().log(Level.WARNING,
+					name + " has been shortened to " + tmp);
 			name = tmp;
 		}
 		HumanNPC npc = (HumanNPC) getNPC(id);
@@ -223,10 +239,12 @@ public class NPCManager {
 		BWorld b = getBWorld(npc.getBukkitEntity().getLocation().getWorld());
 		WorldServer s = b.getWorldServer();
 		try {
-			Method m = s.getClass().getDeclaredMethod("d", new Class[]{Entity.class});
+			Method m = s.getClass().getDeclaredMethod("d",
+					new Class[] { Entity.class });
 			m.setAccessible(true);
 			m.invoke(s, npc.getEntity());
-			m = s.getClass().getDeclaredMethod("c", new Class[]{Entity.class});
+			m = s.getClass().getDeclaredMethod("c",
+					new Class[] { Entity.class });
 			m.setAccessible(true);
 			m.invoke(s, npc.getEntity());
 		} catch (Exception ex) {

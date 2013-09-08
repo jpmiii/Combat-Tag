@@ -1,9 +1,11 @@
 package com.trc202.Containers;
 
 public class Settings {
-	
-	public enum SettingsType {NPC,TIMED,OTHER};
-	
+
+	public enum SettingsType {
+		NPC, TIMED, OTHER
+	};
+
 	private int tagDuration;
 	private boolean debugEnabled;
 	private boolean instaKill;
@@ -24,8 +26,8 @@ public class Settings {
 	private boolean blockEnderPearl;
 	private boolean dontSpawnInWG;
 	private boolean onlyDamagerTagged;
-	
-	public Settings(){
+
+	public Settings() {
 		currentMode = SettingsType.NPC;
 		instaKill = false;
 		tagDuration = 10;
@@ -46,7 +48,7 @@ public class Settings {
 		blockEnderPearl = false;
 		dontSpawnInWG = false;
 		onlyDamagerTagged = false;
-		
+
 	}
 
 	public void setDebugEnabled(boolean debugEnabled) {
@@ -72,24 +74,24 @@ public class Settings {
 	public boolean isInstaKill() {
 		return instaKill;
 	}
-	
+
 	public void setDropTagonKick(boolean droptagonkick) {
 		this.droptagonkick = droptagonkick;
 	}
-	
+
 	public boolean dropTagOnKick() {
 		return droptagonkick;
-	} 
-	
-	public SettingsType getCurrentMode(){
+	}
+
+	public SettingsType getCurrentMode() {
 		return currentMode;
 	}
 
 	public String[] getDisabledCommands() {
 		return disabledCommands;
 	}
-	
-	public void setDisabledCommands(String[] disabledCommands){
+
+	public void setDisabledCommands(String[] disabledCommands) {
 		this.disabledCommands = disabledCommands;
 	}
 
@@ -107,13 +109,13 @@ public class Settings {
 
 	public void setNpcName(String npcName) {
 		this.npcName = npcName;
-		
+
 	}
 
 	public boolean isBlockEditWhileTagged() {
 		return blockEditWhileTagged;
 	}
-	
+
 	public void setBlockEditWhileTagged(boolean blockEditWhileTagged) {
 		this.blockEditWhileTagged = blockEditWhileTagged;
 	}
@@ -121,7 +123,7 @@ public class Settings {
 	public boolean isSendMessageWhenTagged() {
 		return sendMessageWhenTagged;
 	}
-	
+
 	public void setSendMessageWhenTagged(boolean sendMessageWhenTagged) {
 		this.sendMessageWhenTagged = sendMessageWhenTagged;
 	}
@@ -129,16 +131,16 @@ public class Settings {
 	public int getNpcDespawnTime() {
 		return npcDespawnTime;
 	}
-	
+
 	public void setNpcDespawnTime(int npcDespawnTime) {
 		this.npcDespawnTime = npcDespawnTime;
 	}
 
 	public void setNpcDieAfterTime(Boolean npcDieAfterTime) {
 		this.npcDieAfterTime = npcDieAfterTime;
-		
+
 	}
-	
+
 	public boolean isNpcDieAfterTime() {
 		return npcDieAfterTime;
 	}
@@ -158,11 +160,11 @@ public class Settings {
 	public String getCommandMessageNotTagged() {
 		return commandMessageNotTagged;
 	}
-	
+
 	public void setBlockTeleport(boolean blockTeleport) {
 		this.blockTeleport = blockTeleport;
 	}
-	
+
 	public boolean blockTeleport() {
 		return blockTeleport;
 	}
@@ -170,23 +172,23 @@ public class Settings {
 	public void setDontSpawnInWG(boolean dontSpawnInWG) {
 		this.dontSpawnInWG = dontSpawnInWG;
 	}
-	
-	public boolean dontSpawnInWG(){
+
+	public boolean dontSpawnInWG() {
 		return dontSpawnInWG;
 	}
 
 	public void setTagMessageDamaged(String tagMessageDamaged) {
 		this.tagMessageDamaged = tagMessageDamaged;
 	}
-	
+
 	public String getTagMessageDamaged() {
 		return tagMessageDamaged;
 	}
-	
+
 	public void setTagMessageDamager(String tagMessageDamager) {
 		this.tagMessageDamager = tagMessageDamager;
 	}
-	
+
 	public String getTagMessageDamager() {
 		return tagMessageDamager;
 	}
@@ -194,7 +196,7 @@ public class Settings {
 	public void setBlockEnderPearl(boolean blockEnderPearl) {
 		this.blockEnderPearl = blockEnderPearl;
 	}
-	
+
 	public boolean blockEnderPearl() {
 		return blockEnderPearl;
 	}
@@ -202,7 +204,7 @@ public class Settings {
 	public void setOnlyDamager(boolean onlyDamagerTagged) {
 		this.onlyDamagerTagged = onlyDamagerTagged;
 	}
-	
+
 	public boolean onlyDamagerTagged() {
 		return onlyDamagerTagged;
 	}

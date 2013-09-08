@@ -10,7 +10,8 @@ public class NPCPath {
 	private NPCPathFinder pathFinder;
 	private Location end;
 
-	public NPCPath(NPCPathFinder npcPathFinder, ArrayList<Node> path, Location end) {
+	public NPCPath(NPCPathFinder npcPathFinder, ArrayList<Node> path,
+			Location end) {
 		this.path = path;
 		this.end = end;
 		pathFinder = npcPathFinder;

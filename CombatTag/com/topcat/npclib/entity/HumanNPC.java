@@ -19,11 +19,13 @@ public class HumanNPC extends NPC {
 	}
 
 	public void animateArmSwing() {
-		((WorldServer) getEntity().world).tracker.a(getEntity(), new Packet18ArmAnimation(getEntity(), 1));
+		((WorldServer) getEntity().world).tracker.a(getEntity(),
+				new Packet18ArmAnimation(getEntity(), 1));
 	}
 
 	public void actAsHurt() {
-		((WorldServer) getEntity().world).tracker.a(getEntity(), new Packet18ArmAnimation(getEntity(), 2));
+		((WorldServer) getEntity().world).tracker.a(getEntity(),
+				new Packet18ArmAnimation(getEntity(), 2));
 	}
 
 	public void setItemInHand(Material m) {
@@ -31,11 +33,12 @@ public class HumanNPC extends NPC {
 	}
 
 	public void setItemInHand(Material m, short damage) {
-		((HumanEntity) getEntity().getBukkitEntity()).setItemInHand(new ItemStack(m, 1, damage));
+		((HumanEntity) getEntity().getBukkitEntity())
+				.setItemInHand(new ItemStack(m, 1, damage));
 	}
 
 	public void setName(String name) {
-//		((NPCEntity) getEntity()).name = name;
+		// ((NPCEntity) getEntity()).name = name;
 		// No longer works wtf
 		// CHANGED 1.6.1
 	}
@@ -65,7 +68,8 @@ public class HumanNPC extends NPC {
 		if (getEntity().getBukkitEntity().getWorld() != point.getWorld()) {
 			return;
 		}
-		Location npcLoc = ((LivingEntity) getEntity().getBukkitEntity()).getEyeLocation();
+		Location npcLoc = ((LivingEntity) getEntity().getBukkitEntity())
+				.getEyeLocation();
 		double xDiff = point.getX() - npcLoc.getX();
 		double yDiff = point.getY() - npcLoc.getY();
 		double zDiff = point.getZ() - npcLoc.getZ();
@@ -78,6 +82,8 @@ public class HumanNPC extends NPC {
 		}
 		getEntity().yaw = (float) (newYaw - 90);
 		getEntity().pitch = (float) newPitch;
-		((EntityPlayer) getEntity()).aA = (float) (newYaw - 90); // CHANGED 1.6.1 from aw
+		((EntityPlayer) getEntity()).aA = (float) (newYaw - 90); // CHANGED
+																	// 1.6.1
+																	// from aw
 	}
 }

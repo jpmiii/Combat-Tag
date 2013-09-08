@@ -10,19 +10,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_6_R2.CraftServer;
 
 /**
- *
+ * 
  * @author martin
  */
 public class NPCNetworkManager extends NetworkManager {
 
 	public NPCNetworkManager() throws IOException {
-		super(((CraftServer) Bukkit.getServer()).getServer().getLogger(), new NullSocket(), "NPC Manager", new Connection() {
+		super(((CraftServer) Bukkit.getServer()).getServer().getLogger(),
+				new NullSocket(), "NPC Manager", new Connection() {
 
-			@Override
-			public boolean a() {
-				return true;
-			}
-		}, null);
+					@Override
+					public boolean a() {
+						return true;
+					}
+				}, null);
 		try {
 			Field f = NetworkManager.class.getDeclaredField("n");
 			f.setAccessible(true);

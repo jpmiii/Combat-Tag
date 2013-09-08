@@ -14,7 +14,7 @@ import org.bukkit.craftbukkit.v1_6_R2.CraftServer;
 
 /**
  * Server hacks for Bukkit
- *
+ * 
  * @author Kekec852
  */
 public class BServer {

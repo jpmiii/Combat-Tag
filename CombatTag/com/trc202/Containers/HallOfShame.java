@@ -3,14 +3,14 @@ package com.trc202.Containers;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class HallOfShame{
-	
+public class HallOfShame {
+
 	private static String startRow = "<tr> \r\n ";
 	private static String endRow = "</tr>";
 	private static String startCol = "<td>";
 	private static String endCol = "</td>";
 
-	public void generateHTMLPage(String file, String table){
+	public void generateHTMLPage(String file, String table) {
 		String output = "";
 		output = output + "<html> \r\n <body> \r\n";
 		output = output + "<h1>Hall Of PvP Shame</h1> \r\n";
@@ -24,13 +24,13 @@ public class HallOfShame{
 			e.printStackTrace();
 		}
 	}
-	
-	public String generateTable(String[][] twoDArray){
+
+	public String generateTable(String[][] twoDArray) {
 		String output = "";
 		output = output + "<table border=\"1\"> \r\n";
-		for(String[] stringArray : twoDArray){
+		for (String[] stringArray : twoDArray) {
 			output = output + startRow;
-			for(String string : stringArray){
+			for (String string : stringArray) {
 				output = output + startCol + string + endCol;
 			}
 			output = output + endRow;
@@ -39,15 +39,15 @@ public class HallOfShame{
 		return output;
 	}
 	/**
-	 * 	<table border="1">
-	<tr>
-	<td>row 1, cell 1</td>
-	<td>row 1, cell 2</td>
-	</tr>
-	<tr>
-	<td>row 2, cell 1</td>
-	<td>row 2, cell 2</td>
-	</tr>
-	</table> 
+	 * <table border="1">
+	 * <tr>
+	 * <td>row 1, cell 1</td>
+	 * <td>row 1, cell 2</td>
+	 * </tr>
+	 * <tr>
+	 * <td>row 2, cell 1</td>
+	 * <td>row 2, cell 2</td>
+	 * </tr>
+	 * </table>
 	 */
 }
